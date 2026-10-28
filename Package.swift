@@ -4,23 +4,34 @@
 import PackageDescription
 
 let package = Package(
-    name: "aihelp-spm",
+    name: "AIHelpSPM",
+    platforms: [.iOS(.v15)],
     products: [
-        // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
-            name: "aihelp-spm",
-            targets: ["aihelp_spm"]
+            name: "AIHelpSDK",
+            targets: ["AIHelpSupport"]
         ),
     ],
     targets: [
-        // Targets are the basic building blocks of a package, defining a module or a test suite.
-        // Targets can depend on other targets in this package and products from dependencies.
-        .target(
-            name: "aihelp_spm",
-            swiftSettings: [
-                .enableUpcomingFeature("ApproachableConcurrency"),
-            ],
+        .binaryTarget(
+            name: "AIHelpSupportSDK",
+            path: "Sources/AIHelpSupportSDK.xcframework"
         ),
-
+        .target(
+            name: "AIHelpSupport",
+            dependencies: ["AIHelpSupportSDK"],
+            resources: [
+                // Preserve the paths used by the SDK's resource bundle lookup.
+                .copy("Resources/AIHelpSupportSDK.bundle"),
+                .copy("Resources/PrivacyInfo.xcprivacy"),
+            ],
+            linkerSettings: [
+                .linkedFramework("WebKit"),
+                .linkedFramework("Photos"),
+                .linkedFramework("PhotosUI"),
+                .linkedLibrary("sqlite3"),
+            ]
+        ),
+        .testTarget(name: "AIHelpSupportTests", dependencies: ["AIHelpSupport"]),
     ]
 )

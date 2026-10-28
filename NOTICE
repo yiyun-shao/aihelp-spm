@@ -1,0 +1,8 @@
+AIHelp iOS SDK
+Copyright 2015 ShareFun Network Limited.
+
+This repository packages AIHelp's iOS SDK binaries and resources for Swift
+Package Manager. The upstream project is https://github.com/AI-HELP/sdk-ios-example.
+The Swift Package manifest, wrapper and integration tests are additions made
+for this unofficial distribution; upstream binary and resource files are
+redistributed without modification.
