@@ -23,7 +23,6 @@ let package = Package(
             resources: [
                 // Preserve the paths used by the SDK's resource bundle lookup.
                 .copy("Resources/AIHelpSupportSDK.bundle"),
-                .copy("Resources/PrivacyInfo.xcprivacy"),
             ],
             linkerSettings: [
                 .linkedFramework("WebKit"),

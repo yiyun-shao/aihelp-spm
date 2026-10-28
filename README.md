@@ -52,7 +52,7 @@ AIHelpSupportSDK.show(withEntranceId: "YOUR_ENTRANCE_ID")
 
 封装模块会导出 `AIHelpSupportSDK` 的原有 API。也可以直接 `import AIHelpSupportSDK`，但 App 仍应添加完整的 `AIHelpSDK` 产品，以包含资源和链接配置。
 
-包会自动携带 `AIHelpSupportSDK.bundle`（图片及语言文件）、`PrivacyInfo.xcprivacy`，并链接 WebKit、Photos、PhotosUI、sqlite3。无需手动复制 bundle；请保留上述 `-ObjC` 设置。
+包会自动携带 `AIHelpSupportSDK.bundle`（图片及语言文件），并链接 WebKit、Photos、PhotosUI、sqlite3。隐私清单保留在 XCFramework 的各平台 framework 中，不在 SPM 资源 bundle 中重复放置。无需手动复制 bundle；请保留上述 `-ObjC` 设置。
 
 使用相机、相册或麦克风等功能时，需在宿主 App 的 `Info.plist` 中填写对应权限用途说明。SDK 凭据、入口配置、初始化事件和其他 API 请参考 [AIHelp 官方文档](https://docs.aihelp.net/)；此包不提供业务配置。
 
@@ -73,7 +73,7 @@ xcodebuild -scheme AIHelpSPM -destination 'platform=iOS Simulator,id=SIMULATOR_I
 
 ## 更新 SDK 与发布
 
-1. 从 [官方仓库](https://github.com/AI-HELP/sdk-ios-example) 获取同一版本的 XCFramework、资源 bundle 和隐私清单。
+1. 从 [官方仓库](https://github.com/AI-HELP/sdk-ios-example) 获取同一版本的 XCFramework 和资源 bundle，保留各平台 framework 内的隐私清单。
 2. 替换 `Sources/AIHelpSupportSDK.xcframework` 及 `Sources/AIHelpSupport/Resources` 中的对应文件，保留原有 bundle 内部目录。
 3. 核对官方 podspec 的系统框架和系统库依赖，更新 `Package.swift`、本文版本和测试中的版本断言。
 4. 执行真机构建与模拟器测试，提交后推送至 `git@github.com:yiyun-shao/aihelp-spm.git`，创建并推送版本 tag（首次建议 `6.3.0`）。同一 SDK 的封装修复可使用后续补丁版本，并在说明中注明实际 SDK 版本。
